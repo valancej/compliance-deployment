@@ -1,0 +1,39 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: kube-bench
+spec:
+  template:
+    spec:
+      hostPID: true
+      containers:
+        - name: kube-bench
+          # Push the image to your ECR and then refer to it here
+          image: 077257324153.dkr.ecr.us-east-1.amazonaws.com/k8s/kube-bench:latest 
+          # Use the --asff flag if you would like to send findings to AWS Security Hub
+          # Note that this requires you to rebuild a version of the kube-bench image
+          # after editing the cfg/eks-1.0/config.yaml with your account information
+          # command: ["kube-bench", "node", "--benchmark", "eks-1.0", "--asff"]
+          command: ["kube-bench", "node", "--benchmark", "eks-1.0"]
+          volumeMounts:
+            - name: var-lib-kubelet
+              mountPath: /var/lib/kubelet
+              readOnly: true
+            - name: etc-systemd
+              mountPath: /etc/systemd
+              readOnly: true
+            - name: etc-kubernetes
+              mountPath: /etc/kubernetes
+              readOnly: true
+      restartPolicy: Never
+      volumes:
+        - name: var-lib-kubelet
+          hostPath:
+            path: "/var/lib/kubelet"
+        - name: etc-systemd
+          hostPath:
+            path: "/etc/systemd"
+        - name: etc-kubernetes
+          hostPath:
+            path: "/etc/kubernetes"
