@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: example-webapp
+  name: example-webapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: example-webapp
+  template:
+    metadata:
+      labels:
+        app: example-webapp
+    spec:
+      containers:
+        - image: compliance-workflow
+          name: example-webapp
+          ports:
+            - name: http
+              containerPort: 8080
