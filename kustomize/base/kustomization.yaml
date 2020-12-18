@@ -4,6 +4,7 @@ resources:
 - deployment.yaml
 - service.yaml
 - ingress.yaml
+- ../../tools/job-eks.yaml
 namespace: hello-gitops
 images:
 - name: compliance-workflow
