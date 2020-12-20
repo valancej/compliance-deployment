@@ -5,7 +5,7 @@ resources:
 - service.yaml
 # - ingress.yaml
 #- tools/job-eks.yaml
-namespace: hello-gitops
+namespace: webapp
 images:
 - name: example-webapp
   newName: ghcr.io/jvalance/example-webapp
