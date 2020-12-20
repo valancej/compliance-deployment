@@ -9,4 +9,4 @@ namespace: hello-gitops
 images:
 - name: example-webapp
   newName: ghcr.io/jvalance/example-webapp
-  newTag: c8261c338f4dd65967121ee093060f034609ad5f
+  newTag: 91e4e1a67783e289a6edf8bb1d093cade26c83bd
