@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: example-webapp
   labels:
     app: example-webapp
-  name: example-webapp
 spec:
   replicas: 1
   selector:
@@ -15,7 +15,8 @@ spec:
         app: example-webapp
     spec:
       containers:
-        - image: compliance-workflow
+        - image: example-webapp
+          imagePullPolicy: Always
           name: example-webapp
           ports:
             - name: http

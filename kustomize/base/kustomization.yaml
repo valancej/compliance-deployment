@@ -3,10 +3,10 @@ kind: Kustomization
 resources:
 - deployment.yaml
 - service.yaml
-- ingress.yaml
-- ../../tools/job-eks.yaml
+# - ingress.yaml
+#- tools/job-eks.yaml
 namespace: hello-gitops
 images:
-- name: compliance-workflow
-  newName: ghcr.io/valancej/compliance-workflow
+- name: example-webapp
+  newName: ghcr.io/jvalance/example-webapp
   newTag: latest
