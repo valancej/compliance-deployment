@@ -9,6 +9,6 @@ namespace: webapp
 images:
 - name: example-webapp
   newName: ghcr.io/valancej/example-node-webapp
-  newTag: bf10dba2f1e5785a744c8c3ff6515c5ca93f3e03
+  newTag: a2a6b37b334e5a658b0058756b858e9827866eed
 commonAnnotations:
-  gitCommit: bf10dba2f1e5785a744c8c3ff6515c5ca93f3e03
+  gitCommit: a2a6b37b334e5a658b0058756b858e9827866eed
