@@ -3,3 +3,4 @@ kind: Kustomization
 namespace: webapp
 resources:
 - example-webapp-template.yaml
+
