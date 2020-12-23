@@ -1,12 +1,5 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-resources:
-- deployment.yaml
-- service.yaml
-# - ingress.yaml
-#- tools/job-eks.yaml
 namespace: webapp
-images:
-- name: example-webapp
-  newName: ghcr.io/valancej/example-node-webapp
-  newTag: 91e4e1a67783e289a6edf8bb1d093cade26c83bd
+resources:
+- example-webapp-template.yaml

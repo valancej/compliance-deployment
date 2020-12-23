@@ -1,0 +1,60 @@
+---
+# Source: example-webapp/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: example-webapp
+  labels:
+    helm.sh/chart: example-webapp-0.1.0
+    app.kubernetes.io/name: example-webapp
+    app.kubernetes.io/instance: example-webapp
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: example-webapp
+    app.kubernetes.io/instance: example-webapp
+---
+# Source: example-webapp/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-webapp
+  labels:
+    helm.sh/chart: example-webapp-0.1.0
+    app.kubernetes.io/name: example-webapp
+    app.kubernetes.io/instance: example-webapp
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: example-webapp
+      app.kubernetes.io/instance: example-webapp
+  template:
+    metadata:
+      annotations:
+        anchore.stig.profile1: redhat-enterprise-linux-7-stig-baseline
+        anchore.stig.profile2: poc_profile
+      labels:
+        app.kubernetes.io/name: example-webapp
+        app.kubernetes.io/instance: example-webapp
+    spec:
+      securityContext:
+        {}
+      containers:
+        - name: example-webapp
+          securityContext:
+            {}
+          image: "ghcr.io/valancej/example-node-webapp:1.16.0"
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
