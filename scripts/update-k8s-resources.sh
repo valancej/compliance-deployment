@@ -15,6 +15,6 @@ IFS=$'\n'
 echo $helm_set_annotations
 
 cd kustomize/base
-helm template example-webapp ../../example-webapp --values ../../example-webapp/values.yaml --set $helm_set_annotations > example-webapp-template.yaml --debug
+helm template example-webapp ../../example-webapp --values ../../example-webapp/values.yaml --set $helm_set_annotations --set image.tag=$GITHUB_SHA > example-webapp-template.yaml --debug
 cat kustomization.yaml
 kustomize build
