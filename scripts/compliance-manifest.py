@@ -2,7 +2,6 @@
 import os
 import json
 import yaml
-import re
 from pathlib import Path
 
 def main(): 
@@ -20,6 +19,7 @@ def main():
     process_manifest(content)
 
 def process_manifest(content):
+    # Add git environment information to content dict
     git_sha = os.getenv('GITHUB_SHA')
     content["gitSha"] = git_sha
     content["fullImageTag"] = content["imageName"] + git_sha
