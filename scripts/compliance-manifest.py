@@ -20,9 +20,10 @@ def main():
 
 def process_manifest(content):
     # Add git environment information to content dict
-    git_sha = os.getenv('GITHUB_SHA')
+    #git_sha = os.getenv('GITHUB_SHA')
+    git_sha = "kajlsdfkajsdfkj"
     content["gitSha"] = git_sha
-    content["fullImageTag"] = content["imageName"] + git_sha
+    content["fullImageTag"] = content["imageName"] + ":" + git_sha
     # Create JSON manifest file for reports stage
     with open("artifacts/compliance-manifest.json", "w") as file:
         json.dump(content, file)
