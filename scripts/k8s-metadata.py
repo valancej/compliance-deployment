@@ -21,6 +21,7 @@ def main():
 
 def process_manifest(content):
     # Create image labels file for build script to use
+    # Searches manifest for stig profile labels to add
     f = open("artifacts/pod-annotations.env", "w")
     for key, value in content["labels"].items():
         if re.match(r"anchore.stig.profile*", key):
