@@ -18,7 +18,7 @@ spec:
           # Note that this requires you to rebuild a version of the kube-bench image
           # after editing the cfg/eks-1.0/config.yaml with your account information
           # command: ["kube-bench", "node", "--benchmark", "eks-1.0", "--asff"]
-          command: ["kube-bench", "node", "--benchmark", "eks-1.0"]
+          command: ["kube-bench", "node", "--benchmark", "eks-1.0", "--json"]
           volumeMounts:
             - name: var-lib-kubelet
               mountPath: /var/lib/kubelet
