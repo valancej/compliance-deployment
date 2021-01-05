@@ -15,3 +15,4 @@ while [[ $(kubectl get job kube-bench -o 'jsonpath={..status.conditions[?(@.type
 
 POD=$(kubectl get pod -l job-name=kube-bench -o jsonpath="{.items[0].metadata.name}")
 kubectl logs $POD > kube-bench-report.json
+ls
