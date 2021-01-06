@@ -1,3 +1,4 @@
 artifacts
 old-scripts
 compliance_manifest.yaml
+kube-bench-report.json
