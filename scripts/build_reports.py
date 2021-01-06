@@ -14,7 +14,7 @@ from pathlib import Path
 # 4. Evaluate K8s / runtime environment
 # 
 # Generate a single report per stage including: 
-# - vuln / compliance information from tool used (Grype, Anchore Enterprise, etc.)
+# - vuln / compliance information from tool used (Grype, Anchore Enterprise, kube-bench, inspec etc.)
 # - metadata (timestamp, git sha, image name, etc.)
 
 ###### Setup command line parser
@@ -23,7 +23,7 @@ def setup_parser():
     parser.add_argument('-s', '--stage', default='none', help='Pipeline step/stage name. ex. directory, image, registry, deploy')
     parser.add_argument('-n', '--number', default='none', type=int, help='Pipeline step/stage number. ex. 1, 2, 3')
     parser.add_argument('-c', '--compliance', default='cis', help='compliance check to evaluate. ex. cis')
-    parser.add_argument('-f', '--file', default='vulnerabilities.json', help='path to output results file from previous tool to attach to report. ex. gype vulnerabilities.json')
+    parser.add_argument('-f', '--file', default='vulnerabilities.json', help='path to output results file from previous tool to attach to report. ex. grype vulnerabilities.json')
 
     return parser
 
@@ -118,6 +118,12 @@ def create_report(content, stage, stage_number, compliance_standard, input_file)
 
         report_content.update(compliance_checks)
     
+    elif stage == 'kube-bench':
+        print('kube-bench stage found. looking for kube-bench report')
+        compliance_checks["tool"] = 'kube-bench'
+
+        report_content.update(compliance_checks)
+
     elif stage == 'deploy':
         print('deploy stage found')
         compliance_checks["tool"] = 'Anchore Enterprise'
