@@ -40,6 +40,7 @@ spec:
   template:
     metadata:
       annotations:
+        anchore.cis.profile: cis
         anchore.stig.profile1: redhat-enterprise-linux-7-stig-baseline
         anchore.stig.profile2: poc_profile
       labels:
@@ -52,7 +53,7 @@ spec:
         - name: example-webapp
           securityContext:
             {}
-          image: "ghcr.io/valancej/example-node-webapp:9c567f72d7430b7fc5bc5193234d66fb6612848f"
+          image: "ghcr.io/valancej/example-node-webapp:0bc75e183f0251b2a387c53f9f6990630523d352"
           imagePullPolicy: Always
           ports:
             - name: http
