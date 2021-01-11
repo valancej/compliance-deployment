@@ -24,7 +24,7 @@ def process_manifest(content):
     # Searches manifest for stig profile labels to add
     f = open("artifacts/pod-annotations.env", "w")
     for key, value in content["labels"].items():
-        if re.match(r"anchore.stig.profile*", key):
+        if re.match(r"anchore.*", key):
           new_key = key.replace('.', '\\.')
           f.write(f"{new_key}={value}\n")
     
