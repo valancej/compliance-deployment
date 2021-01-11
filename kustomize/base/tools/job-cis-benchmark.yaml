@@ -1,0 +1,40 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: anchore-cis-bench
+spec:
+  template:
+    metadata:
+      labels:
+        name: anchore-cis-bench
+    spec:
+      hostPID: true
+      restartPolicy: Never
+      containers:
+        - name: anchore-cis-bench
+          image: 077257324153.dkr.ecr.us-east-1.amazonaws.com/cis-poc:latest
+          imagePullPolicy: Always
+          command: ["./cis_runtime_checks.py", "--container", "all"]
+          resources:
+            limits:
+              memory: 200Mi
+            requests:
+              cpu: 100m
+              memory: 200Mi
+          volumeMounts:
+          - name: dockersock
+            mountPath: /var/run/docker.sock
+            readOnly: false
+          - name: dockerbin
+            mountPath: /usr/bin/docker
+            readOnly: false	  
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: dockersock
+        hostPath:
+          path: "/var/run/docker.sock"
+          type: File
+      - name: dockerbin
+        hostPath:
+          path: "/usr/bin/docker"
