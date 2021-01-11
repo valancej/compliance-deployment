@@ -24,6 +24,6 @@ kubectl apply -f kustomize/base/tools/job-cis-benchmark.yaml
 while [[ $(kubectl get job anchore-cis-bench -o 'jsonpath={..status.conditions[?(@.type=="Complete")].status}') != "True" ]]; do echo "waiting for job" && sleep 1; done
 
 CISPOD=$(kubectl get pod -l job-name=anchore-cis-bench -o jsonpath="{.items[0].metadata.name}")
-kubectl logs $CISPOD > artifacts/cis-bench-report.json
+kubectl logs $CISPOD > artifacts/anchore-cis-bench-report.json
 
 ls -R
