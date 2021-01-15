@@ -53,7 +53,7 @@ spec:
         - name: example-webapp
           securityContext:
             {}
-          image: "ghcr.io/valancej/example-node-webapp:45f7964ad5f17482e07720931b4616355972fc49"
+          image: "ghcr.io/valancej/example-node-webapp:ae6e056f970b829650cd5682bbc98bd60ba29687"
           imagePullPolicy: Always
           ports:
             - name: http
