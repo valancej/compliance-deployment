@@ -24,6 +24,7 @@ def setup_parser():
     parser.add_argument('-n', '--number', default='none', type=int, help='Pipeline step/stage number. ex. 1, 2, 3')
     parser.add_argument('-c', '--compliance', default='cis', help='compliance check to evaluate. ex. cis')
     parser.add_argument('-f', '--file', default='vulnerabilities.json', help='path to output results file from previous tool to attach to report. ex. grype vulnerabilities.json')
+    parser.add_argument('-t', '--tool', help='tool used to generate results. ex. anchore-grype')
 
     return parser
 
@@ -39,7 +40,7 @@ def process_input_results_file(input_file):
         print("Could not find input file")
 
 ###### Processes YAML and builds new report output
-def create_report(content, stage, stage_number, compliance_standard, input_file):
+def create_report(content, stage, stage_number, compliance_standard, input_file, tool):
    
     results_dict = process_input_results_file(input_file)
 
@@ -62,10 +63,53 @@ def create_report(content, stage, stage_number, compliance_standard, input_file)
 
     if stage == 'source':
        print("source stage found")
-       report_content["tool"]["name"] = 'anchore-grype'
-       report_content["compliance"]["sections"].append({
-           'description': 'Images should be scanned frequently for any vulnerabilities', 'name': '4.4'
-        })
+       report_content["tool"]["name"] = tool
+       report_content["compliance"]["sections"] = [
+            {
+                'description': 'Ensure a container for the user has been created',
+                'name': '4.1'
+            },
+            {
+                'description': 'Ensure containers use trusted base images',
+                'name': '4.2'
+            },
+            {
+                'description': 'Ensure that unnecessary packages are not installed in the container',
+                'name': '4.3'
+            },
+            {
+                'description': 'Images should be scanned frequently for any vulnerabilities',
+                'name': '4.4'
+            },
+            {
+                'description': 'Images should be scanned frequently for any vulnerabilities',
+                'name': '4.5'
+            },            
+            {
+                'description': 'Ensure HEALTHCHECK instructions have been added',
+                'name': '4.6'
+            },
+            {
+                'description': 'Ensure update instructions are not used alone in the Dockerfile',
+                'name': '4.7'
+            },
+            {
+                'description': 'Ensure setuid and setgid permissions are removed',
+                'name': '4.8'
+            },
+            {
+                'description': 'Ensure that COPY is used instead of ADD',
+                'name': '4.9'
+            },
+            {
+                'description': 'Ensure secrets are not stored',
+                'name': '4.10'
+            },
+            {
+                'description': 'Ensure only necessary ports are open',
+                'name': '5.8'
+            }      
+       ]
            
     elif stage == 'build':
         print('build stage found')
@@ -87,6 +131,10 @@ def create_report(content, stage, stage_number, compliance_standard, input_file)
             {
                 'description': 'Ensure containers use trusted base images',
                 'name': '4.2'
+            },
+            {
+                'description': 'Images should be scanned frequently for any vulnerabilities',
+                'name': '4.4'
             },
             {
                 'description': 'Ensure that unnecessary packages are not installed in the container',
@@ -410,8 +458,12 @@ def create_report(content, stage, stage_number, compliance_standard, input_file)
             }
         ]
 
-    with open("stage_outputs/"+ stage + ".json", "w") as file:
-       json.dump(report_content, file)
+    if stage == "source":
+        with open("stage_outputs/"+ stage + "-" + tool + ".json", "w") as file:
+            json.dump(report_content, file)
+    else:
+        with open("stage_outputs/"+ stage + ".json", "w") as file:
+            json.dump(report_content, file)
 
 def main(arg_parser):
 
@@ -432,9 +484,10 @@ def main(arg_parser):
     stage_number = args.number
     compliance_standard = args.compliance
     input_file = args.file
+    tool = args.tool
 
     # Process manifest from yaml
-    create_report(content, stage, stage_number, compliance_standard, input_file)
+    create_report(content, stage, stage_number, compliance_standard, input_file, tool)
     
 if __name__ == "__main__":
     try:
