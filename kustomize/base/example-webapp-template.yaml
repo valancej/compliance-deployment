@@ -47,14 +47,8 @@ spec:
         app.kubernetes.io/name: example-webapp
         app.kubernetes.io/instance: example-webapp
     spec:
-      securityContext:
-        {}
-      restartPolicy: "OnFailure"
-      maxRetries: "3"
       containers:
         - name: example-webapp
-          securityContext:
-            {}
           image: "ghcr.io/valancej/example-node-webapp:592b3e4bc27c5732a69595ff5765cf18eb5bfa05"
           imagePullPolicy: Always
           ports:
