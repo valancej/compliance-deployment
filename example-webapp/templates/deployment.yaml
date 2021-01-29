@@ -23,8 +23,6 @@ spec:
       {{- end }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      restartPolicy: "OnFailure"
-      maxRetries: "3"
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
